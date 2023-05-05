@@ -15,3 +15,23 @@ A module is created for launching new VPC so it can be resued for Staging and Pr
 * ```private_subnet_cidrs``` - List of private subnet CIDR blocks (default: ```["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]```)
 * ```azs``` - List of Availability Zones (default: ```["eu-west-1a", "eu-west-1b", "eu-west-1c"]```)
 
+### Output
+* ```vpc_id``` - VPC Id
+
+### Usage
+
+Another Variables file was decalred outside VPC module for defining AWS region. VPC module was called twice for staging and production environment. Here is the example code.  
+**Note:** Since cost was an important factor for Staging environment, the subnets are spanned across single AZ.
+```
+module "Production_VPC" {
+    source = "./vpc"
+    vpc_name = "Production"
+}
+
+module "Staging_VPC" {
+    source = "./vpc"
+    vpc_name = "Staging"
+    azs = ["eu-west-1a"]
+}
+```
+
